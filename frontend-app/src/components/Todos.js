@@ -9,7 +9,7 @@ const Todos = () => {
 
   const getTodos = useCallback(async () => {
     try {
-      const response = await fetch('http://localhost:8000/todos');
+      const response = await fetch('http://localhost:8000/');
       const todosData = await response.json();
       setTodos(todosData.todos);
     } catch (err) {

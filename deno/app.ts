@@ -5,10 +5,17 @@ import todoRoutes from "./routes/todos.ts";
 const app = new Application();
 
 app.use(async (ctx, next) => {
-  ctx.response.body = "Hello World";
+  console.log("Middleware");
   await next();
 });
 
+app.use(async (ctx, next) => {
+  //Resolving CORS error.
+  ctx.response.headers.set("Access-Control-Allow-Origin", "*");
+  ctx.response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  ctx.response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+  await next();
+});
 app.use(todoRoutes.routes());
 app.use(todoRoutes.allowedMethods());
 

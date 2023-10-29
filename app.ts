@@ -7,3 +7,6 @@ app.use((ctx) => {
 });
 
 await app.listen({ port: 8000 });
+
+
+//deno run --allow-net  app.ts (To run the file which contains server)

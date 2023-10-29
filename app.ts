@@ -1,19 +1,9 @@
-const PORT = 3000;
+import { Application } from "https://deno.land/x/oak/mod.ts";
 
-async function main() {
-  const server = Deno.listen({ port: PORT });
-  console.log(`Listening on http://localhost:${PORT}`);
+const app = new Application();
 
-  for await (const conn of server) {
-    (async () => {
-      const httpConn = Deno.serveHttp(conn);
-      for await (const requestEvent of httpConn) {
-        // Handle your requests here
-        const body = new TextEncoder().encode("Hello, Deno!\n");
-        requestEvent.respondWith(new Response(body));
-      }
-    })();
-  }
-}
+app.use((ctx) => {
+  ctx.response.body = "Hello World";
+});
 
-main();
+await app.listen({ port: 8000 });

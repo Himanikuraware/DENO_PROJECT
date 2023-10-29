@@ -1,8 +1,19 @@
-const text = "This is the test.";
+const PORT = 3000;
 
-const encoder = new TextEncoder();
-const data = encoder.encode(text);
+async function main() {
+  const server = Deno.listen({ port: PORT });
+  console.log(`Listening on http://localhost:${PORT}`);
 
-Deno.writeFile("message.txt", data).then(() => {
-  console.log("Saved file!");
-});
+  for await (const conn of server) {
+    (async () => {
+      const httpConn = Deno.serveHttp(conn);
+      for await (const requestEvent of httpConn) {
+        // Handle your requests here
+        const body = new TextEncoder().encode("Hello, Deno!\n");
+        requestEvent.respondWith(new Response(body));
+      }
+    })();
+  }
+}
+
+main();

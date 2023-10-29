@@ -1,7 +1,8 @@
-let message: string;
+const text = "This is the test.";
 
-message = "Hello World!";
+const encoder = new TextEncoder();
+const data = encoder.encode(text);
 
-console.log(message);
-
-// To run the file we use "deno run app.ts(file name)"
+Deno.writeFile("message.txt", data).then(() => {
+  console.log("Saved file!");
+});
